@@ -75,7 +75,7 @@
        
         [label setTranslatesAutoresizingMaskIntoConstraints:NO];
         
-        label.numberOfLines=20;
+        label.numberOfLines=0;
         
         [self.contentView addSubview:label];
         
@@ -100,7 +100,7 @@
     
     self.vehicleImageViewBottomConstraint = [self.thumbImg.bottomAnchor constraintEqualToAnchor:self.thumbImg.superview.bottomAnchor constant: -10.0f];
     
-    self.vehicleImageViewBottomConstraint.priority = 900;
+    self.vehicleImageViewBottomConstraint.priority = 100;
     
     [self.thumbImg.heightAnchor constraintEqualToConstant:60.].active = YES;
         

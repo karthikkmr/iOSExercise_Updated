@@ -57,7 +57,7 @@
 -(void)testDataArrayCount {
     [self.vcToTest tableItemcount];
     NSInteger testCount = self.vcToTest.rowsCount;
-    XCTAssertTrue(self.vcToTest.itemscount.count == testCount, @"Items Matches Correct array");
+    XCTAssertTrue(self.vcToTest.itemsArray.count == testCount, @"Items Matches Correct array");
 }
 - (void)testPerformanceExample {
     // This is an example of a performance test case.

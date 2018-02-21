@@ -126,6 +126,8 @@ NSString *const webserviceAPI = @"https://dl.dropboxusercontent.com/s/2iodh4vg0e
         cell = [[CustomTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kPlaceListCell];
     }
     cell.backgroundColor = [UIColor whiteColor];
+    cell.tag = indexPath.row;
+    cell.thumbImg.image = nil;
     
     // Load details from Array
     NSDictionary *dataDictionary = [self.itemsArray objectAtIndex:indexPath.row];
@@ -152,17 +154,19 @@ NSString *const webserviceAPI = @"https://dl.dropboxusercontent.com/s/2iodh4vg0e
     // Thumb image
     if (!([imageStr isKindOfClass:[NSNull class]] || imageStr == nil )) {
         NSURL *imgURL = [NSURL URLWithString:imageStr];
-        NSLog(@"%@",imgURL);
+//        NSLog(@"%@",imgURL);
         dispatch_queue_t backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
         dispatch_async(backgroundQueue, ^{
             UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:imgURL]];
             // only update UI on the main thread
             dispatch_async(dispatch_get_main_queue(), ^{
-                cell.thumbImg.image = image;
+                if(cell.tag == indexPath.row) {
+                    cell.thumbImg.image = image;
+                }
             });
         });
     }else{
-        cell.thumbImg.image = [UIImage imageNamed:@"placeholder"];
+//        cell.thumbImg.image = [UIImage imageNamed:@"placeholder"];
     }
     return cell;
 }
@@ -193,6 +197,16 @@ NSString *const webserviceAPI = @"https://dl.dropboxusercontent.com/s/2iodh4vg0e
         [self.dataTable reloadData];
         [SVProgressHUD dismiss];
     });
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    // do before rotation
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    // do after rotation
 }
 
 -(void)tableItemcount{
